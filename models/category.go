@@ -12,6 +12,7 @@ type Category struct {
 	UpdatedAt   time.Time `json:"updated_at"`
 }
 
+// OPTIONAL
 type CategoryResponse struct {
 	ID          uint      `json:"id"`
 	Name        string    `json:"name"`
