@@ -10,7 +10,3 @@ numReplicas = 1
 name = "category-api"
 port = 8080
 protocol = "tcp"
-
-# Environment variables
-[variables]
-GIN_MODE = "release"

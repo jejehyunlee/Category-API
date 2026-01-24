@@ -1,9 +1,7 @@
-FROM golang:1.25.6-alpine AS builder
+# Single stage build - lebih reliable untuk Railway
+FROM golang:1.25.6-alpine
 
 WORKDIR /app
-
-# Install dependencies
-RUN apk add --no-cache git ca-certificates
 
 # Copy go mod files
 COPY go.mod go.sum ./
@@ -13,28 +11,10 @@ RUN go mod download
 COPY . .
 
 # Build the application
-RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o main .
+RUN CGO_ENABLED=0 GOOS=linux go build -o main .
 
-# Final stage
-FROM alpine:latest
-
-WORKDIR /root/
-
-# Install SSL certificates for database connections
-RUN apk --no-cache add ca-certificates
-
-# Copy binary from builder
-COPY --from=builder /app/main .
-
-# Create non-root user for security
-RUN adduser -D -g '' appuser
-USER appuser
-
-# Expose port (Railway akan override PORT env var)
+# Expose port
 EXPOSE 8080
 
-# Health check untuk Railway
-HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
-  CMD wget --no-verbose --tries=1 --spider http://localhost:8080/health || exit 1
-
+# Run the application
 CMD ["./main"]
