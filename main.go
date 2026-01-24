@@ -18,6 +18,17 @@ func main() {
 		log.Println("No .env file found, using system environment variables")
 	}
 
+	// Log Railway environment info
+	log.Println("🚀 Starting Category API on Railway...")
+
+	if url := os.Getenv("RAILWAY_PUBLIC_URL"); url != "" {
+		log.Printf("🌐 Public URL: %s", url)
+	}
+
+	if env := os.Getenv("RAILWAY_ENVIRONMENT"); env != "" {
+		log.Printf("🏭 Environment: %s", env)
+	}
+
 	ginMode := os.Getenv("GIN_MODE")
 	if ginMode == "" {
 		ginMode = "debug" // default
