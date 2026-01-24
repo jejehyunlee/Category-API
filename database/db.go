@@ -13,7 +13,7 @@ var DB *gorm.DB
 
 func ConnectDatabase() {
 	// Prioritize DATABASE_URL from environment
-	databaseURL := os.Getenv("DATABASE_URL")
+	databaseURL := os.Getenv("DATABASE_PUBLIC_URL")
 
 	if databaseURL == "" {
 		// Fallback to individual variables
