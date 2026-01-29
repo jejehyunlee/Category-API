@@ -1,35 +1,32 @@
 package main
 
 import (
+	"Category-API/config"
 	"Category-API/database"
 	"Category-API/handlers"
 	"Category-API/middleware"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
+	"github.com/spf13/viper"
 	"log"
-	"os"
 	"time"
 )
 
 func main() {
-
-	if err := godotenv.Load(); err != nil {
-		log.Println("No .env file found, using system environment variables")
-	}
+	config.Init()
 
 	// Log Railway environment info
 	log.Println("🚀 Starting Category API on Railway...")
 
-	if url := os.Getenv("RAILWAY_PUBLIC_URL"); url != "" {
+	if url := viper.GetString("RAILWAY_PUBLIC_URL"); url != "" {
 		log.Printf("🌐 Public URL: %s", url)
 	}
 
-	if env := os.Getenv("RAILWAY_ENVIRONMENT"); env != "" {
+	if env := viper.GetString("RAILWAY_ENVIRONMENT"); env != "" {
 		log.Printf("🏭 Environment: %s", env)
 	}
 
-	ginMode := os.Getenv("GIN_MODE")
+	ginMode := viper.GetString("GIN_MODE")
 	if ginMode == "" {
 		ginMode = "debug" // default
 	}
@@ -132,7 +129,7 @@ func main() {
 	}
 
 	// Start server
-	port := os.Getenv("PORT")
+	port := viper.GetString("PORT")
 	if port == "" {
 		port = "8080"
 	}

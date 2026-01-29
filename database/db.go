@@ -3,26 +3,26 @@ package database
 import (
 	"Category-API/models"
 	"fmt"
+	"github.com/spf13/viper"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"log"
-	"os"
 )
 
 var DB *gorm.DB
 
 func ConnectDatabase() {
 	// Prioritize DATABASE_URL from environment
-	databaseURL := os.Getenv("DATABASE_URL")
+	databaseURL := viper.GetString("DATABASE_URL")
 
 	if databaseURL == "" {
 		// Fallback to individual variables
-		dbHost := os.Getenv("DB_HOST")
-		dbPort := os.Getenv("DB_PORT")
-		dbUser := os.Getenv("DB_USER")
-		dbPassword := os.Getenv("DB_PASSWORD")
-		dbName := os.Getenv("DB_NAME")
-		dbSSLMode := os.Getenv("DB_SSLMODE")
+		dbHost := viper.GetString("DB_HOST")
+		dbPort := viper.GetString("DB_PORT")
+		dbUser := viper.GetString("DB_USER")
+		dbPassword := viper.GetString("DB_PASSWORD")
+		dbName := viper.GetString("DB_NAME")
+		dbSSLMode := viper.GetString("DB_SSLMODE")
 
 		if dbSSLMode == "" {
 			dbSSLMode = "disable"
