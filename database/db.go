@@ -43,7 +43,7 @@ func ConnectDatabase() {
 	log.Println("Database connected successfully!")
 
 	// Auto migrate
-	err = DB.AutoMigrate(&models.Category{})
+	err = DB.AutoMigrate(&models.Category{}, &models.Product{})
 	if err != nil {
 		log.Printf("Warning: AutoMigrate failed: %v", err)
 	} else {

@@ -103,6 +103,11 @@ func main() {
 				"GET /categories/:id":    "Get category by ID",
 				"PUT /categories/:id":    "Update category",
 				"DELETE /categories/:id": "Delete category",
+				"GET /products":          "Get all products",
+				"POST /products":         "Create new product",
+				"GET /products/:id":      "Get product by ID",
+				"PUT /products/:id":      "Update product",
+				"DELETE /products/:id":   "Delete product",
 			},
 		})
 	})
@@ -115,6 +120,15 @@ func main() {
 		categoryRoutes.GET("/:id", handlers.GetCategoryByID)
 		categoryRoutes.PUT("/:id", handlers.UpdateCategory)
 		categoryRoutes.DELETE("/:id", handlers.DeleteCategory)
+	}
+
+	productRoutes := router.Group("/products")
+	{
+		productRoutes.GET("/", handlers.GetAllProducts)
+		productRoutes.POST("/", handlers.CreateProduct)
+		productRoutes.GET("/:id", handlers.GetProductByID)
+		productRoutes.PUT("/:id", handlers.UpdateProduct)
+		productRoutes.DELETE("/:id", handlers.DeleteProduct)
 	}
 
 	// Start server
