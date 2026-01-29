@@ -40,13 +40,16 @@ func HealthCheckDB(c *gin.Context) {
 
 	// Get database stats
 	var categoryCount int64
+	var productCount int64
 	database.GetDB().Table("categories").Count(&categoryCount)
+	database.GetDB().Table("products").Count(&productCount)
 
 	utils.Success(c, "Database is healthy", gin.H{
 		"status":           "connected",
 		"timestamp":        time.Now().Unix(),
 		"connection_test":  "successful",
 		"categories_count": categoryCount,
+		"products_count":   productCount,
 		"query_result":     result,
 	})
 }
